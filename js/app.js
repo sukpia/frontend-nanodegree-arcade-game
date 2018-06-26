@@ -21,7 +21,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 505) {
       this.x = 0;
       // generate random speeds between 100 and 500
-      this.speed = Math.floor((Math.random() * 500) + 100);
+      this.speed = Math.floor((Math.random() * 300) + 100);
     }
 };
 
@@ -39,6 +39,7 @@ var Player = function() {
   this.y = 400;
   this.moveXDistance = 202;
   this.moveYDistance = 400;
+  this.win = false;
 };
 
 // Update the player's position, required method for game
@@ -51,11 +52,7 @@ Player.prototype.update = function() {
   }
   // Player reach the water and WON!
   if (this.moveYDistance == -15) {
-    var self = this;
-    setTimeout(function() {
-      console.log("YOU WON!");
-      self.reset();
-    }, 500);
+    this.win = true;
   }
 };
 
@@ -72,19 +69,26 @@ Player.prototype.render = function() {
 //  3. up arrow - move player up
 //  4. down arrow - move player down
 Player.prototype.handleInput = function(keypressed) {
-  switch (keypressed) {
-    case 'left':
-      this.moveXDistance = this.x - 101;
-      break;
-    case 'right':
-      this.moveXDistance = this.x + 101;
-      break;
-    case 'up':
-      this.moveYDistance = this.y - 83;
-      break;
-    case 'down':
-      this.moveYDistance = this.y + 83;
-      break;
+  if (!this.win) {
+    switch (keypressed) {
+      case 'left':
+        this.moveXDistance = this.x - 101;
+        break;
+      case 'right':
+        this.moveXDistance = this.x + 101;
+        break;
+      case 'up':
+        this.moveYDistance = this.y - 83;
+        break;
+      case 'down':
+        this.moveYDistance = this.y + 83;
+        break;
+    }
+  } else {
+    if (keypressed === 'enter') {
+      this.win = false;
+      this.reset();
+    }
   }
 };
 
@@ -110,7 +114,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        13: 'enter'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);

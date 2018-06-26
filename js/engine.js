@@ -82,19 +82,22 @@ var Engine = (function(global) {
         checkCollisions();
     }
 
-    /* This function does some initial setup that should only occur once,
-     * particularly setting the lastTime variable that is required for the
-     * game loop.
+    /* This is called by the update function and loops through all of the
+     * objects within your allEnemies array as defined in app.js and detect
+     * when enemy and player occupy the same space.
+     * Once collision detected, reset the player to initial location.
      */
      function checkCollisions() {
-       allEnemies.forEach(function(enemy) {
-         let enemyHeadX = Math.floor(enemy.x) + 101;
-         let enemyTailX = Math.floor(enemy.x);
-         let enemyY = Math.floor(enemy.y);
-         if ((enemyHeadX > player.x && enemyTailX < player.x + 101) && enemyY === player.y) {
-           setTimeout(reset, 100);
-         }
-       });
+       if (!player.win) {
+         allEnemies.forEach(function(enemy) {
+           let enemyHeadX = Math.floor(enemy.x) + 80;
+           let enemyTailX = Math.floor(enemy.x);
+           let enemyY = Math.floor(enemy.y);
+           if ((enemyHeadX > player.x && enemyTailX < player.x + 90) && enemyY === player.y) {
+             setTimeout(reset, 100);
+           }
+         });
+       }
      }
 
     /* This is called by the update function and loops through all of the
@@ -154,6 +157,18 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+
+        if (player.win === true) {
+          ctx.font = "56pt Impact";
+          ctx.textAlign = "center";
+          ctx.fillStyle = "white";
+          ctx.strokeStyle = "black";
+          ctx.lineWidth = 3;
+          ctx.fillText("YOU'VE WON!", canvas.width/2, canvas.height/2);
+          ctx.strokeText("YOU'VE WON!", canvas.width/2, canvas.height/2);
+          ctx.font = "16pt Lucida Console";
+          ctx.fillText("Press Enter to Continue", canvas.width/2, canvas.height-50);
+        }
     }
 
     /* This function is called by the render function and is called on each game
@@ -171,8 +186,8 @@ var Engine = (function(global) {
         player.render();
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
+    /* This function reset player back to initial location.
+     * maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
@@ -189,7 +204,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        
     ]);
     Resources.onReady(init);
 
