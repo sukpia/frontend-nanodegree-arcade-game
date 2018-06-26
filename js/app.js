@@ -35,11 +35,26 @@ var Player = function() {
   this.sprite = 'images/char-boy.png';
   this.x = 202;
   this.y = 400;
+  this.moveXDistance = 202;
+  this.moveYDistance = 400;
 };
 
 // Update the player's position, required method for game
 Player.prototype.update = function() {
-
+  if (this.moveXDistance >= 0 && this.moveXDistance <= 404) {
+    this.x = this.moveXDistance;
+  }
+  if (this.moveYDistance >= -15 && this.moveYDistance <= 400) {
+    this.y = this.moveYDistance;
+  }
+  // Player reach the water and WON!
+  if (this.moveYDistance == -15) {
+    var self = this;
+    setTimeout(function() {
+      console.log("YOU WON!");
+      self.reset();
+    }, 500);
+  }
 };
 
 // Draw the player on the screen, required method for game
@@ -57,43 +72,33 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keypressed) {
   switch (keypressed) {
     case 'left':
-      if (this.x <= 0) {
-        this.x = 0;
-      } else {
-        this.x -= 101;
-      }
+      this.moveXDistance = this.x - 101;
       break;
     case 'right':
-
-      if (this.x >= 404) {
-        this.x = 404;
-      } else {
-        this.x += 101;
-      }
+      this.moveXDistance = this.x + 101;
       break;
     case 'up':
-      this.y -= 83;
-      // reach the water, win the game
-      if (this.y <= -15) {
-        // reset player to initial position
-        this.y = 400;
-        this.x = 202;
-      }
+      this.moveYDistance = this.y - 83;
       break;
     case 'down':
-      if (this.y >= 400) {
-        this.y = 400;
-      } else {
-        this.y += 83;
-      }
+      this.moveYDistance = this.y + 83;
       break;
   }
 };
 
+Player.prototype.reset = function() {
+  // move player back to inital location
+  this.x = 202;
+  this.y = 400;
+  this.moveXDistance = 202;
+  this.moveYDistance = 400;
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-let allEnemies = [new Enemy(0, 63, 100), new Enemy(101, 146, 150), new Enemy(202, 229, 200)];
+let allEnemies = [new Enemy(0, 68, 100), new Enemy(101, 151, 150), new Enemy(202, 234, 200)];
+// let allEnemies = [new Enemy(202, 234, 50)];
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
