@@ -39,3 +39,14 @@ ol {
   text-align: left;
   list-style: none;
 }
+
+.timer {
+  width: 505px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+#gameCanvas {
+  padding: 0;
+  margin: 0;
+}

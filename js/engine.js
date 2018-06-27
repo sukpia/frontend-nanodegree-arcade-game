@@ -48,6 +48,8 @@ var Engine = (function(global) {
         update(dt);
         render();
 
+        // win.minutes.textContent = now.getMinutes();
+        // win.seconds.textContent = now.getSeconds();
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -64,7 +66,7 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
+        // reset();
         lastTime = Date.now();
         main();
     }
@@ -95,8 +97,8 @@ var Engine = (function(global) {
            let enemyTailX = Math.floor(enemy.x);
            let enemyY = Math.floor(enemy.y);
            if ((enemyHeadX > player.x && enemyTailX < player.x + 90) && enemyY === player.y) {
-             score = 0;
-             setTimeout(reset, 100);
+             //setTimeout(gameReset, 100);
+             gameReset();
            }
          });
        }
@@ -158,6 +160,17 @@ var Engine = (function(global) {
             }
         }
 
+        /* Loop through the number of rows and columns we've defined above
+         * and, using the gemImages array, randomly draw the gem image in
+         * random "grid"
+         */
+         // One blue gem in row 2, random column
+         for (var i = 0; i < gems.length; i++) {
+           if (!gems[i].collected) {
+            ctx.drawImage(Resources.get(gems[i].color), gems[i].col * 101 + 35, gems[i].row * 83 - 20, 31, 43);
+           }
+         }
+
         renderEntities();
 
         // display the player score.
@@ -170,7 +183,8 @@ var Engine = (function(global) {
           // drawText("16pt Lucida Console", " ", canvas.width-450, canvas.height-30, false);
           // ctx.clearRect(0,canvas.height-50, canvas.width, 50);
           drawText("56pt Impact", "YOU'VE WON!", canvas.width/2, canvas.height/2, true);
-          drawText("20pt Lucida Console", "Your score is " + score, canvas.width/2, canvas.height/2+50, true);
+          drawText("20pt Lucida Console", document.querySelector('.timer').textContent, canvas.width/2, canvas.height/2+50, true);
+          drawText("20pt Lucida Console", "Your score is " + score, canvas.width/2, canvas.height/2+80, true);
           drawText("16pt Lucida Console", "Press Enter to Continue", canvas.width/2, canvas.height-50, false);
         }
     }
@@ -202,15 +216,6 @@ var Engine = (function(global) {
         player.render();
     }
 
-    /* This function reset player back to initial location.
-     * maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-        // put player back to initial location
-        player.reset();
-    }
-
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
@@ -224,7 +229,10 @@ var Engine = (function(global) {
         'images/char-cat-girl.png',
         'images/char-horn-girl.png',
         'images/char-pink-girl.png',
-        'images/char-princess-girl.png'
+        'images/char-princess-girl.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png'
     ]);
     Resources.onReady(init);
 
