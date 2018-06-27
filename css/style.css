@@ -1,3 +1,41 @@
 body {
     text-align: center;
 }
+
+ol {
+  text-align: left;
+  list-style-position: inside;
+}
+
+#gameMenu {
+  font-family: Calibri, Helvetica, sans-serif;
+  width: 505px;
+  height: 606px;
+  background-color: MediumSeaGreen;
+  color: white;
+  display: inline-block;
+}
+
+.playButton {
+  font-size: 3em;
+  width: 200px;
+  height: 100px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  top: 100px;
+  background-color: DodgerBlue;
+  color: white;
+}
+
+.playButton:hover {
+  background-color: RoyalBlue;
+  text-decoration: underline;
+  font-style: italic;
+}
+
+.content {
+  text-align: left;
+  list-style: none;
+}

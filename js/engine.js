@@ -20,7 +20,8 @@ var Engine = (function(global) {
      */
     var doc = global.document,
         win = global.window,
-        canvas = doc.createElement('canvas'),
+        // canvas = doc.createElement('canvas'),
+        canvas = doc.getElementById('gameCanvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
@@ -205,7 +206,10 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png'
     ]);
     Resources.onReady(init);
 

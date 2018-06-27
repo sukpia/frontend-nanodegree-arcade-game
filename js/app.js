@@ -1,3 +1,14 @@
+var startButton = document.querySelector('.playButton');
+var gameMenu = document.getElementById('gameMenu');
+var gameCanvas = document.getElementById('gameCanvas');
+
+gameCanvas.style.display = "none";
+
+startButton.addEventListener('click', function() {
+  gameMenu.style.display = "none";
+  gameCanvas.style.display = "inline-block";
+});
+
 // Enemies our player must avoid
 var Enemy = function(x, y, speed = 100) {
     // Variables applied to each of our instances go here,
@@ -43,10 +54,13 @@ var Player = function() {
 };
 
 // Update the player's position, required method for game
+// check if player win the game by checking if player reached the water
 Player.prototype.update = function() {
+  // Update player x position if its not off screen
   if (this.moveXDistance >= 0 && this.moveXDistance <= 404) {
     this.x = this.moveXDistance;
   }
+  // Update player y position if its not off screen
   if (this.moveYDistance >= -15 && this.moveYDistance <= 400) {
     this.y = this.moveYDistance;
   }
@@ -92,13 +106,14 @@ Player.prototype.handleInput = function(keypressed) {
   }
 };
 
+// Reset player's position back to initial location
 Player.prototype.reset = function() {
-  // move player back to inital location
   this.x = 202;
   this.y = 400;
   this.moveXDistance = 202;
   this.moveYDistance = 400;
 }
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -109,7 +124,7 @@ let player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keydown', function(e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
