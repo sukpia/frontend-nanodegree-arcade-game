@@ -95,6 +95,7 @@ var Engine = (function(global) {
            let enemyTailX = Math.floor(enemy.x);
            let enemyY = Math.floor(enemy.y);
            if ((enemyHeadX > player.x && enemyTailX < player.x + 90) && enemyY === player.y) {
+             score = 0;
              setTimeout(reset, 100);
            }
          });
@@ -159,17 +160,31 @@ var Engine = (function(global) {
 
         renderEntities();
 
-        if (player.win === true) {
-          ctx.font = "56pt Impact";
-          ctx.textAlign = "center";
-          ctx.fillStyle = "white";
-          ctx.strokeStyle = "black";
-          ctx.lineWidth = 3;
-          ctx.fillText("YOU'VE WON!", canvas.width/2, canvas.height/2);
-          ctx.strokeText("YOU'VE WON!", canvas.width/2, canvas.height/2);
-          ctx.font = "16pt Lucida Console";
-          ctx.fillText("Press Enter to Continue", canvas.width/2, canvas.height-50);
+        // display the player score.
+        if (!player.win) {
+          drawText("16pt Lucida Console", "Score: " + score, canvas.width-450, canvas.height-30, false);
         }
+
+        // draw the Winning Text if player WON.
+        if (player.win) {
+          // drawText("16pt Lucida Console", " ", canvas.width-450, canvas.height-30, false);
+          // ctx.clearRect(0,canvas.height-50, canvas.width, 50);
+          drawText("56pt Impact", "YOU'VE WON!", canvas.width/2, canvas.height/2, true);
+          drawText("20pt Lucida Console", "Your score is " + score, canvas.width/2, canvas.height/2+50, true);
+          drawText("16pt Lucida Console", "Press Enter to Continue", canvas.width/2, canvas.height-50, false);
+        }
+    }
+
+    function drawText(textFont, textToDisplay, x, y, stroke) {
+      ctx.font = textFont;
+      ctx.textAlign = "center";
+      ctx.fillStyle = "white";
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.fillText(textToDisplay, x, y);
+      if (stroke) {
+        ctx.strokeText(textToDisplay, x, y);
+      }
     }
 
     /* This function is called by the render function and is called on each game

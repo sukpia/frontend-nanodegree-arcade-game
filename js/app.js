@@ -2,12 +2,16 @@ var startButton = document.querySelector('.playButton');
 var gameMenu = document.getElementById('gameMenu');
 var gameCanvas = document.getElementById('gameCanvas');
 
+// Display the game menu at the beginning of the game
+// Press the Play button will hide the game menu
 gameCanvas.style.display = "none";
-
 startButton.addEventListener('click', function() {
   gameMenu.style.display = "none";
   gameCanvas.style.display = "inline-block";
 });
+
+// Start the game with 0 score
+let score = 0;
 
 // Enemies our player must avoid
 var Enemy = function(x, y, speed = 100) {
@@ -62,6 +66,13 @@ Player.prototype.update = function() {
   }
   // Update player y position if its not off screen
   if (this.moveYDistance >= -15 && this.moveYDistance <= 400) {
+    if (this.moveYDistance < this.y) {
+      score += 10;
+    }
+    if (this.moveYDistance > this.y) {
+      score -= 10;
+      if (score < 0) score = 0;
+    }
     this.y = this.moveYDistance;
   }
   // Player reach the water and WON!
@@ -102,6 +113,7 @@ Player.prototype.handleInput = function(keypressed) {
     if (keypressed === 'enter') {
       this.win = false;
       this.reset();
+      score = 0;
     }
   }
 };
@@ -113,7 +125,6 @@ Player.prototype.reset = function() {
   this.moveXDistance = 202;
   this.moveYDistance = 400;
 }
-
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
