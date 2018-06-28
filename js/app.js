@@ -71,6 +71,7 @@ var Player = function() {
   this.moveXDistance = 202;
   this.moveYDistance = 400;
   this.win = false;
+  this.lost = false;
   this.row = 6;
   this.col = 2;
 };
@@ -135,7 +136,7 @@ Player.prototype.render = function() {
 //  3. up arrow - move player up
 //  4. down arrow - move player down
 Player.prototype.handleInput = function(keypressed) {
-  if (!this.win) {
+  if (!this.win && !this.lost) {
     switch (keypressed) {
       case 'left':
         this.moveXDistance = this.x - 101;
@@ -152,7 +153,6 @@ Player.prototype.handleInput = function(keypressed) {
     }
   } else {
     if (keypressed === 'enter') {
-      this.win = false;
       gameReset();
     }
   }
@@ -172,6 +172,7 @@ function gameReset() {
   player.moveXDistance = 202;
   player.moveYDistance = 400;
   player.win = false;
+  player.lost = false;
   player.row = 6;
   player.col = 2;
   // Reset score

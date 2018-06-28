@@ -97,8 +97,7 @@ var Engine = (function(global) {
            let enemyTailX = Math.floor(enemy.x);
            let enemyY = Math.floor(enemy.y);
            if ((enemyHeadX > player.x && enemyTailX < player.x + 90) && enemyY === player.y) {
-             //setTimeout(gameReset, 100);
-             gameReset();
+             player.lost = true;
            }
          });
        }
@@ -175,24 +174,30 @@ var Engine = (function(global) {
 
         // display the player score.
         if (!player.win) {
-          drawText("16pt Lucida Console", "Score: " + score, canvas.width-450, canvas.height-30, false);
+          drawText("16pt Lucida Console", "Score: " + score, canvas.width-450, canvas.height-30, false, "white");
         }
 
         // draw the Winning Text if player WON.
         if (player.win) {
           // drawText("16pt Lucida Console", " ", canvas.width-450, canvas.height-30, false);
           // ctx.clearRect(0,canvas.height-50, canvas.width, 50);
-          drawText("56pt Impact", "YOU'VE WON!", canvas.width/2, canvas.height/2, true);
-          drawText("20pt Lucida Console", document.querySelector('.timer').textContent, canvas.width/2, canvas.height/2+50, true);
-          drawText("20pt Lucida Console", "Your score is " + score, canvas.width/2, canvas.height/2+80, true);
-          drawText("16pt Lucida Console", "Press Enter to Continue", canvas.width/2, canvas.height-50, false);
+          drawText("56pt Impact", "YOU'VE WON!", canvas.width/2, canvas.height/2, true, "white");
+          drawText("20pt Lucida Console", document.querySelector('.timer').textContent, canvas.width/2, canvas.height/2+50, true, "white");
+          drawText("20pt Lucida Console", "Your score is " + score, canvas.width/2, canvas.height/2+80, true, "white");
+          drawText("16pt Lucida Console", "Press Enter to Continue", canvas.width/2, canvas.height-50, false, "white");
+        }
+
+        if(player.lost) {
+          drawText("56pt Impact", "YOU'VE LOST", canvas.width/2, canvas.height -100, true, "red");
+          drawText("16pt Lucida Console", "Press Enter to Continue", canvas.width/2, canvas.height-50, false, "red");
+          drawText("56pt Tahoma", "X", player.col * 101 + 55, player.row * 83 + 40, true, "red");
         }
     }
 
-    function drawText(textFont, textToDisplay, x, y, stroke) {
+    function drawText(textFont, textToDisplay, x, y, stroke, color) {
       ctx.font = textFont;
       ctx.textAlign = "center";
-      ctx.fillStyle = "white";
+      ctx.fillStyle = color;
       ctx.strokeStyle = "black";
       ctx.lineWidth = 2;
       ctx.fillText(textToDisplay, x, y);
