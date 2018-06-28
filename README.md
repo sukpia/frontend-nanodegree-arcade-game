@@ -12,16 +12,14 @@ For detailed instructions on how to get started, check out this [guide](https://
 
 ### Basic Functionality
 * This game has a Player and Enemies (Bugs).
-* The goal of the player is to reach the water, without colliding into any enemies.
-* The player can move left, right, up and down.
+* The goal of the player is to reach the water, without colliding into any bugs.
+* The player can move left, right, up and down with keyboard arrow keys.
 * The enemies move in varying speeds on the paved blocks.
-* Once the player collides with an enemy, the game is reset and the player moves back to the start square.
-* Once the player reaches the water the game is won.
+* Once the player collides with an enemy, the game ends. Press Enter to restart.
+* Once the player reaches the water the game is won. Press Enter to restart.
 
 ### Additional Functionality
-
-## Dependencies
-
-## Contributing
-
-This repository is the starter code for all Udacity students. Therefore, we most likely will not accept pull requests.
+* Added collectible gems.
+* Added Score, player scores 10 points for every step forward or collect a gem. Subtract 10 points for every step backward. Minimum score is 0 and maximum score is 100.
+* Added time to time the game.
+* When player wins, display the score and time.
