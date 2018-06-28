@@ -10,6 +10,8 @@ For detailed instructions on how to get started, check out this [guide](https://
 
 ## How to Play
 
+I implemented the following functionalities for this project.
+
 ### Basic Functionality
 * This game has a Player and Enemies (Bugs).
 * The goal of the player is to reach the water, without colliding into any bugs.
@@ -19,7 +21,15 @@ For detailed instructions on how to get started, check out this [guide](https://
 * Once the player reaches the water the game is won. Press Enter to restart.
 
 ### Additional Functionality
+* Added game menu with instructions at the beginning of the game
 * Added collectible gems.
 * Added Score, player scores 10 points for every step forward or collect a gem. Subtract 10 points for every step backward. Minimum score is 0 and maximum score is 100.
 * Added time to time the game.
 * When player wins, display the score and time.
+
+## Future Improvements
+
+* add multiple enemy types.
+* add different difficulty levels as game progress.
+* add scoreboard.
+* add more grids.
